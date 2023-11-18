@@ -108,5 +108,5 @@ float CPUPathwaySolver::computeFValue(node_t *node)
     p->toXY(node->id, &x, &y);
     int dx = abs(x - p->ex());
     int dy = abs(y - p->ey());
-    return node->dist + min(dx, dy)*SQRT2 + abs(dx-dy);
+    return node->dist + min(dx, dy)*1.4142135623731f + abs(dx-dy);
 }

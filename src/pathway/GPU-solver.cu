@@ -3,6 +3,8 @@
 #include <iostream>
 #include <moderngpu.cuh>
 #include <queue>
+#include <chrono>
+#include <random>
 
 #include "pathway/GPU-solver.hpp"
 #include "pathway/GPU-kernel.cuh"
@@ -338,7 +340,13 @@ vector<uint32_t> GPUPathwaySolver::genRandomPrime(uint32_t maximum, int count)
         now--;
     }
 
-    std::random_shuffle(result.begin(), result.end());
+
+    // Obtain a time-based seed:
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    // Create a default random engine with the seed
+    std::default_random_engine engine(seed);
+    std::shuffle(result.begin(), result.end(), engine);
     result.erase(result.begin() + count, result.end());
 
     for (int i = 0; i < count; ++i)

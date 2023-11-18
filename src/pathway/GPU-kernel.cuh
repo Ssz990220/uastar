@@ -6,7 +6,6 @@
 #include <cuda_profiler_api.h>
 
 #include <moderngpu.cuh>
-
 #include "utils.hpp"
 
 // Suppose we only use x dimension
@@ -33,7 +32,7 @@ __host__ __device__ bool operator<(const heap_t &a, const heap_t &b)
 {
     return a.fValue < b.fValue;
 }
-__host__ __device__ bool operator>(const heap_t &a, const heap_t &b)
+__inline__ __host__ __device__ bool operator>(const heap_t &a, const heap_t &b)
 {
     return a.fValue > b.fValue;
 }
@@ -99,7 +98,7 @@ inline __device__ float computeHValue(int x, int y)
 {
     int dx = abs(d_targetX - x);
     int dy = abs(d_targetY - y);
-    return min(dx, dy)*SQRT2 + abs(dx-dy);
+    return min(dx, dy)* 1.4142135623731f + abs(dx-dy);
 }
 
 inline __device__ float computeHValue(uint32_t nodeID)
@@ -258,7 +257,7 @@ __global__ void kExtractExpand(
 
     const int DX[8] = { 1,  1, -1, -1,  1, -1,  0,  0 };
     const int DY[8] = { 1, -1,  1, -1,  0,  0,  1, -1 };
-    const float COST[8] = { SQRT2, SQRT2, SQRT2, SQRT2, 1, 1, 1, 1 };
+    const float COST[8] = { 1.4142135623731f, 1.4142135623731f, 1.4142135623731f, 1.4142135623731f, 1, 1, 1, 1 };
 
 #pragma unroll
     for (int k = 0; k < VT; ++k) {
