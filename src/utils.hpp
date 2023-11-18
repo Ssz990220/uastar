@@ -1,6 +1,6 @@
 #ifndef __UASTAR_UTIL
 #define __UASTAR_UTIL
-
+#define BOOST_NO_CXX14_CONSTEXPR
 #include <algorithm>
 #include <cassert>
 #include <climits>
